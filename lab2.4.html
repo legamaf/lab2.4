@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота 2.4</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+            color: #222;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input, select {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+    </style>
+
+    <!-- Бібліотека jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Лабораторна робота 2.4</h1>
+    <h2>Розробка сценарію обробки даних елементів форми</h2>
+
+    <!-- Завдання 1 -->
+    <section>
+        <h3>Завдання 1. Створення базової форми</h3>
+
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="Ваше ім'я" required>
+            <input type="email" id="email" placeholder="Електронна пошта" required>
+            <button type="submit" id="submitButton">Надіслати</button>
+        </form>
+
+        <p id="formResult" class="result"></p>
+
+        <script>
+            document.getElementById("contactForm").onsubmit = function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+
+                console.log(`Ім'я: ${name}, Email: ${email}`);
+                document.getElementById("formResult").textContent =
+                    "Дані введено. Перевір консоль браузера.";
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 2 -->
+    <section>
+        <h3>Завдання 2. Валідація даних форми</h3>
+
+        <form id="validationForm">
+            <input type="email" id="validationEmail"
+                   placeholder="Введіть email" required>
+            <button type="submit">Перевірити email</button>
+        </form>
+
+        <p id="validationResult" class="result"></p>
+
+        <script>
+            document.getElementById("validationForm").onsubmit = function(event) {
+                event.preventDefault();
+
+                const email = document.getElementById("validationEmail").value;
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const result = document.getElementById("validationResult");
+
+                if (!emailPattern.test(email)) {
+                    result.textContent = "Невірний формат електронної пошти!";
+                } else {
+                    result.textContent = "Електронну пошту введено правильно!";
+                }
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 3 -->
+    <section>
+        <h3>Завдання 3. Використання бібліотеки jQuery</h3>
+
+        <p id="jqueryText">Цей текст зміниться.</p>
+        <button id="changeTextButton">Змінити текст</button>
+
+        <script>
+            $("#changeTextButton").click(function() {
+                $("#jqueryText").text("Текст змінено за допомогою jQuery!");
+            });
+        </script>
+    </section>
+
+    <!-- Завдання 4 -->
+    <section>
+        <h3>Завдання 4. Додавання динамічних елементів</h3>
+
+        <button id="addParagraphButton">Додати абзац</button>
+        <div id="paragraphContainer"></div>
+
+        <script>
+            document.getElementById("addParagraphButton").onclick = function() {
+                const newParagraph = document.createElement("p");
+                newParagraph.innerText = "Новий абзац";
+                document.getElementById("paragraphContainer").appendChild(newParagraph);
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 5 -->
+    <section>
+        <h3>Завдання 5. Вибір типу даних</h3>
+
+        <select id="dataType">
+            <option value="text">Текст</option>
+            <option value="email">Електронна пошта</option>
+            <option value="tel">Телефон</option>
+        </select>
+
+        <button id="showDataType">Показати тип даних</button>
+        <p id="dataTypeResult" class="result"></p>
+
+        <script>
+            document.getElementById("showDataType").onclick = function() {
+                const select = document.getElementById("dataType");
+                const selectedType = select.value;
+                const selectedText = select.options[select.selectedIndex].text;
+
+                document.getElementById("dataTypeResult").textContent =
+                    `Вибрано тип: ${selectedText} (${selectedType})`;
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 6 -->
+    <section>
+        <h3>Завдання 6. Додаткові дані</h3>
+
+        <input type="text" id="extraName" placeholder="Ваше ім'я">
+        <input type="email" id="extraEmail" placeholder="Електронна пошта">
+        <input type="text" id="address" placeholder="Адреса">
+
+        <button id="submitAll">Надіслати всі дані</button>
+        <p id="extraResult" class="result"></p>
+
+        <script>
+            document.getElementById("submitAll").onclick = function() {
+                const name = document.getElementById("extraName").value;
+                const email = document.getElementById("extraEmail").value;
+                const address = document.getElementById("address").value;
+
+                console.log(`Ім'я: ${name}, Email: ${email}, Адреса: ${address}`);
+
+                document.getElementById("extraResult").textContent =
+                    `Ім'я: ${name || "не вказано"}; Email: ${email || "не вказано"}; Адреса: ${address || "не вказано"}`;
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 7 -->
+    <section>
+        <h3>Завдання 7. Вимкнення кнопки</h3>
+
+        <form id="buttonForm">
+            <input type="text" id="buttonName" placeholder="Ваше ім'я" required>
+            <input type="email" id="buttonEmail" placeholder="Електронна пошта" required>
+            <button type="submit" id="disabledSubmit" disabled>Надіслати</button>
+        </form>
+
+        <p id="buttonResult" class="result"></p>
+
+        <script>
+            const buttonInputs = document.querySelectorAll(
+                "#buttonForm input"
+            );
+            const disabledSubmit = document.getElementById("disabledSubmit");
+
+            function checkInputs() {
+                const allFilled = Array.from(buttonInputs).every(
+                    input => input.value.trim() !== "" && input.validity.valid
+                );
+
+                disabledSubmit.disabled = !allFilled;
+            }
+
+            buttonInputs.forEach(input => {
+                input.addEventListener("input", checkInputs);
+            });
+
+            document.getElementById("buttonForm").onsubmit = function(event) {
+                event.preventDefault();
+                document.getElementById("buttonResult").textContent =
+                    "Форму заповнено правильно!";
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 8 -->
+    <section>
+        <h3>Завдання 8. Зберігання даних у Local Storage</h3>
+
+        <form id="storageForm">
+            <input type="text" id="storageName" placeholder="Ваше ім'я" required>
+            <input type="email" id="storageEmail" placeholder="Електронна пошта" required>
+            <button type="submit">Зберегти дані</button>
+        </form>
+
+        <p id="storageResult" class="result"></p>
+
+        <script>
+            document.getElementById("storageForm").onsubmit = function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById("storageName").value;
+                const email = document.getElementById("storageEmail").value;
+
+                localStorage.setItem("name", name);
+                localStorage.setItem("email", email);
+
+                document.getElementById("storageResult").textContent =
+                    "Дані успішно збережено в Local Storage!";
+            };
+        </script>
+    </section>
+
+    <!-- Завдання 9 -->
+    <section>
+        <h3>Завдання 9. Відображення збережених даних</h3>
+
+        <button id="loadDataButton">Завантажити збережені дані</button>
+
+        <p id="savedData" class="result"></p>
+
+        <script>
+            document.getElementById("loadDataButton").onclick = function() {
+                const name = localStorage.getItem("name");
+                const email = localStorage.getItem("email");
+                const result = document.getElementById("savedData");
+
+                if (name !== null || email !== null) {
+                    result.textContent =
+                        `Ім'я: ${name || "не вказано"}; Email: ${email || "не вказано"}`;
+                } else {
+                    result.textContent = "Збережених даних немає.";
+                }
+            };
+
+            // Автоматично заповнюємо поля, якщо дані вже збережені.
+            window.addEventListener("load", function() {
+                const name = localStorage.getItem("name");
+                const email = localStorage.getItem("email");
+
+                if (name !== null) {
+                    document.getElementById("storageName").value = name;
+                }
+
+                if (email !== null) {
+                    document.getElementById("storageEmail").value = email;
+                }
+            });
+        </script>
+    </section>
+
+</body>
+</html>
